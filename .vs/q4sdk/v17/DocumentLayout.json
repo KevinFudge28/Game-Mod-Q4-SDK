@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{49BEC5C6-B964-417A-851E-808886B57430}|game.vcxproj|solutionrelative:game\\weapon\\WeaponRocketLauncher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49BEC5C6-B964-417A-851E-808886B57430}|game.vcxproj|C:\\USERS\\KFUDG\\GAME-MOD-Q4-SDK\\RENDERER\\RENDERWORLD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{49BEC5C6-B964-417A-851E-808886B57430}|game.vcxproj|C:\\Users\\kfudg\\Game-Mod-Q4-SDK\\RENDERER\\RENDERWORLD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{49BEC5C6-B964-417A-851E-808886B57430}|game.vcxproj|solutionrelative:RENDERER\\RENDERWORLD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
@@ -63,8 +63,7 @@
               "RelativeToolTip": "game\\physics\\Force_Spring.cpp",
               "ViewState": "AgIAACsAAAAAAAAAAAAswDQAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-15T18:29:38.68Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T18:29:38.68Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "game\\gamesys\\Class.cpp",
               "ViewState": "AgIAAAQAAAAAAAAAAAAswA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-15T18:23:39.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T18:23:39.03Z"
             },
             {
               "$type": "Document",
@@ -89,8 +87,7 @@
               "RelativeToolTip": "game\\gamesys\\SysCmds.cpp",
               "ViewState": "AgIAAKQAAAAAAAAAAAAswK0AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-15T18:22:20.97Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T18:22:20.97Z"
             },
             {
               "$type": "Document",
@@ -102,8 +99,7 @@
               "RelativeToolTip": "game\\gamesys\\SaveGame.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-15T18:21:51.221Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T18:21:51.221Z"
             },
             {
               "$type": "Document",
@@ -113,7 +109,7 @@
               "RelativeDocumentMoniker": "renderer\\RenderWorld.h",
               "ToolTip": "C:\\Users\\kfudg\\Game-Mod-Q4-SDK\\renderer\\RenderWorld.h",
               "RelativeToolTip": "renderer\\RenderWorld.h",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAjwGcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAjwGUAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-09-15T18:21:13.514Z",
               "EditorCaption": ""
@@ -128,8 +124,7 @@
               "RelativeToolTip": "idlib\\math\\Simd.cpp",
               "ViewState": "AgIAAMsFAAAAAAAAAAAswO8FAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-13T04:07:38.701Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-13T04:07:38.701Z"
             }
           ]
         }
