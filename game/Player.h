@@ -27,6 +27,8 @@ extern const idEventDef EV_SpectatorTouch;
 extern const idEventDef EV_Player_SetArmor;
 extern const idEventDef EV_Player_SetExtraProjPassEntity;
 extern const idEventDef EV_Player_DamageEffect;
+extern const idEventDef EV_Player_MistyStep;
+extern const idEventDef EV_Player_EndMistyStep;
 
 const float THIRD_PERSON_FOCUS_DISTANCE	= 512.0f;
 const int	LAND_DEFLECT_TIME			= 150;
@@ -427,6 +429,10 @@ public:
 
 public:
 	CLASS_PROTOTYPE( idPlayer );
+	void Event_MistyStep();
+	void Event_EndMistyStep();
+
+	int lastMistyStepTime;
 
 							idPlayer();
 	virtual					~idPlayer();

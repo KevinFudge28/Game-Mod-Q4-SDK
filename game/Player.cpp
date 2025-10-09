@@ -109,6 +109,8 @@ const idEventDef EV_Player_SetExtraProjPassEntity( "setExtraProjPassEntity", "E"
 const idEventDef EV_Player_SetArmor( "setArmor", "f" );
 const idEventDef EV_Player_DamageEffect( "damageEffect", "sE" );
 const idEventDef EV_Player_AllowFallDamage( "allowFallDamage", "d" );
+const idEventDef EV_Player_MistyStep("mistyStep");
+const idEventDef EV_Player_EndMistyStep("endMistyStep");
 
 // mekberg: allow enabling/disabling of objectives
 const idEventDef EV_Player_EnableObjectives( "enableObjectives" );
@@ -142,6 +144,8 @@ CLASS_DECLARATION( idActor, idPlayer )
 	EVENT( EV_Player_GetAmmoData,			idPlayer::Event_GetAmmoData )
 	EVENT( EV_Player_RefillAmmo,			idPlayer::Event_RefillAmmo )
 	EVENT( EV_Player_AllowFallDamage,		idPlayer::Event_AllowFallDamage )
+	EVENT( EV_Player_MistyStep,				idPlayer::Event_MistyStep )
+	EVENT( EV_Player_EndMistyStep,			idPlayer::Event_EndMistyStep )
 
 
 // mekberg: allow enabling/disabling of objectives
@@ -8567,6 +8571,10 @@ void idPlayer::PerformImpulse( int impulse ) {
 			idFuncRadioChatter::RepeatLast();
 			break;
 		}
+		case 30: {
+			ProcessEvent(&EV_Player_MistyStep);
+			break;
+		}
 
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
@@ -14075,6 +14083,47 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 	}
 
 	return weaponNum;
+}
+
+#define MISTY_STEP_SPEED 1001.0f
+#define MISTY_STEP_DURATION 3000
+#define MISTY_STEP_COOLDOWN 2000
+
+int lastMistStepTime = 0;
+
+void idPlayer::Event_MistyStep() {
+	if (gameLocal.time < lastMistStepTime + MISTY_STEP_COOLDOWN) {
+		gameLocal.Printf("Misty Step on Cooldown!\n");
+		return; // Cooldown active
+	}
+
+	lastMistStepTime = gameLocal.time;
+	gameLocal.Printf("Misty Step Activated!\n");
+
+	idVec3 dashDirection = physicsObj.GetLinearVelocity();
+	if (dashDirection.Length() == 0) {
+		dashDirection = viewAngles.ToForward(); // Dash forward if standing still
+	}
+	dashDirection.Normalize();
+	dashDirection *= MISTY_STEP_SPEED;
+
+	physicsObj.SetLinearVelocity(dashDirection);
+
+	// Make the player temporarily invisible and invincible
+	fl.takedamage = false;
+	renderEntity.noShadow = true;
+	Hide();
+
+	// Schedule reappearance
+	PostEventMS(&EV_Player_EndMistyStep, MISTY_STEP_DURATION);
+}
+
+void idPlayer::Event_EndMistyStep() {
+	fl.takedamage = true;
+	renderEntity.noShadow = false;
+	Show();
+
+	gameLocal.Printf("Misty Step Ended! Player is visible again.\n");
 }
 
 // RITUAL END
