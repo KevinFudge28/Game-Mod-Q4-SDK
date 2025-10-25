@@ -111,6 +111,12 @@ const idEventDef EV_Player_DamageEffect( "damageEffect", "sE" );
 const idEventDef EV_Player_AllowFallDamage( "allowFallDamage", "d" );
 const idEventDef EV_Player_MistyStep("mistyStep");
 const idEventDef EV_Player_EndMistyStep("endMistyStep");
+const idEventDef EV_Player_DisableInvincibility("disableInvincibility");
+
+//dnd classes
+const idEventDef EV_Player_SetClassRocketLauncher("setClassRocketLauncher");
+const idEventDef EV_Player_SetClassLightninggun("setClassLightninggun");
+const idEventDef EV_Player_SetClassShotgun("setClassShotgun");
 
 // mekberg: allow enabling/disabling of objectives
 const idEventDef EV_Player_EnableObjectives( "enableObjectives" );
@@ -146,6 +152,7 @@ CLASS_DECLARATION( idActor, idPlayer )
 	EVENT( EV_Player_AllowFallDamage,		idPlayer::Event_AllowFallDamage )
 	EVENT( EV_Player_MistyStep,				idPlayer::Event_MistyStep )
 	EVENT( EV_Player_EndMistyStep,			idPlayer::Event_EndMistyStep )
+	EVENT(EV_Player_DisableInvincibility,   idPlayer::Event_DisableInvincibility)
 
 
 // mekberg: allow enabling/disabling of objectives
@@ -1084,6 +1091,7 @@ idPlayer::idPlayer() {
 	memset( &usercmd, 0, sizeof( usercmd ) );
 
 	alreadyDidTeamAnnouncerSound = false;
+	godmode = false;
 
 	doInitWeapon			= false;
 	noclip					= false;
@@ -1365,6 +1373,19 @@ idPlayer::SetShowHud
 bool idPlayer::GetShowHud( void )	{
 	return !disableHud;
 }
+/*
+==============
+idPlayer::DisableInvincibility
+==============
+*/
+void idPlayer::Event_DisableInvincibility() {
+	if (godmode) {
+		godmode = false;
+		gameLocal.Printf("Invincibility expired!\n");
+	}
+}
+
+
 
 /*
 ==============
@@ -3403,6 +3424,10 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 		_hud->SetStateFloat	( "player_healthpct", idMath::ClampFloat ( 0.0f, 1.0f, (float)health / (float)inventory.maxHealth ) );
 		_hud->HandleNamedEvent ( "updateHealth" );
 	}
+
+	// set timers for hud
+	_hud->SetStateInt("btimer1", (abilityTimer[0] <= gameLocal.time ? 0 : (abilityTimer[0] - gameLocal.time)/1000));
+	_hud->SetStateString("btimer1", (abilityTimer[0] < gameLocal.time ? "0" : va("%i", (abilityTimer[0] - gameLocal.time) / 1000)));
 		
 	temp = _hud->State().GetInt ( "player_armor", "-1" );
 	if ( temp != inventory.armor ) {
@@ -8567,6 +8592,7 @@ void idPlayer::PerformImpulse( int impulse ) {
    			}
    			break;
    		}
+
 		case IMPULSE_40: {
 			idFuncRadioChatter::RepeatLast();
 			break;
@@ -8575,6 +8601,13 @@ void idPlayer::PerformImpulse( int impulse ) {
 			ProcessEvent(&EV_Player_MistyStep);
 			break;
 		}
+		case 99: {  // This impulse is now triggered when you press B
+			godmode = !godmode;
+			gameLocal.Printf("Invincibility %s\n", godmode ? "enabled" : "disabled");
+			break;
+		}
+		
+		
 
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
@@ -14116,6 +14149,7 @@ void idPlayer::Event_MistyStep() {
 
 	// Schedule reappearance
 	PostEventMS(&EV_Player_EndMistyStep, MISTY_STEP_DURATION);
+	
 }
 
 void idPlayer::Event_EndMistyStep() {
@@ -14125,5 +14159,7 @@ void idPlayer::Event_EndMistyStep() {
 
 	gameLocal.Printf("Misty Step Ended! Player is visible again.\n");
 }
+
+
 
 // RITUAL END

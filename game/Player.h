@@ -29,6 +29,7 @@ extern const idEventDef EV_Player_SetExtraProjPassEntity;
 extern const idEventDef EV_Player_DamageEffect;
 extern const idEventDef EV_Player_MistyStep;
 extern const idEventDef EV_Player_EndMistyStep;
+extern const idEventDef EV_Player_DisableInvincibility;
 
 const float THIRD_PERSON_FOCUS_DISTANCE	= 512.0f;
 const int	LAND_DEFLECT_TIME			= 150;
@@ -284,6 +285,8 @@ public:
 
 	friend class idThread;
 
+	void Event_DisableInvincibility();
+
 	usercmd_t				usercmd;
 
 	class idPlayerView		playerView;			// handles damage kicks and effects
@@ -439,6 +442,8 @@ public:
 
 	void					Spawn( void );
 	void					Think( void );
+
+	
 
 	// save games
 	void					Save( idSaveGame *savefile ) const;					// archives object for save game file
@@ -801,6 +806,12 @@ public:
 	void					SetCash( float newCashAmount );
 	void					ResetCash();
 // RITUAL END
+
+	// timer defined
+	int abilityTimer[10];
+
+
+
 
 protected:
 	void					SetupHead( const char* modelKeyName = "", idVec3 headOffset = idVec3(0, 0, 0) );

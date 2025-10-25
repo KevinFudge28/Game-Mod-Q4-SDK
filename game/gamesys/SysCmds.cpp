@@ -3038,6 +3038,134 @@ void Cmd_ClientOverflowReliable_f( const idCmdArgs& args ) {
 }
 #endif
 
+//DND classes
+void cmd_Rocketlauncher_q(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "weapon_rocketlauncher", 0);
+		gameLocal.Printf("Rocket Launcher Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Napalmgun_t(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "weapon_napalmgun", 0);
+		gameLocal.Printf("Naplam gun Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Lightninggun_l(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "weapon_lightninggun", 0);
+		gameLocal.Printf("Lightning gun Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Shotgun_k(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "weapon_shotgun", 0);
+		gameLocal.Printf("Shotgun Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Haste_h(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "haste", 0);
+		gameLocal.Printf("Haste Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Regen_p(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		const int healAmount = 100; 
+		player->health += healAmount;
+
+		
+		if (player->health > player->inventory.maxHealth) {
+			player->health = player->inventory.maxHealth;
+		}
+
+		gameLocal.Printf("You regenerated %d health!\n", healAmount);
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+void cmd_Regen2_(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		const int healAmount = 25;
+		player->health += healAmount;
+
+
+		if (player->health > player->inventory.maxHealth) {
+			player->health = player->inventory.maxHealth;
+		}
+
+		gameLocal.Printf("You regenerated 25 health!\n", healAmount);
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+
+void cmd_ArmorGen_g(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		const int armorAmount = 100;
+		player->inventory.armor += armorAmount;
+
+		
+		if (player->inventory.armor > player->inventory.maxarmor) {
+			player->inventory.armor = player->inventory.maxarmor;
+		}
+
+		gameLocal.Printf("Your armor is now max!\n", armorAmount);
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+
+
+
+void cmd_Railgun_j(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		GiveStuffToPlayer(player, "weapon_railgun", 0);
+		gameLocal.Printf("Railgun Granted!\n");
+	}
+	else {
+		gameLocal.Printf("No player found!\n");
+	}
+}
+
+
+
+
 /*
 =================
 idGameLocal::InitConsoleCommands
@@ -3133,6 +3261,20 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "saveParticles",			Cmd_SaveParticles_f,		CMD_FL_GAME|CMD_FL_CHEAT,	"saves all lights to the .map file" );
 	cmdSystem->AddCommand( "clearLights",			Cmd_ClearLights_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"clears all lights" );
 	cmdSystem->AddCommand( "gameError",				Cmd_GameError_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"causes a game error" );
+
+	//dnd Spells 
+	cmdSystem->AddCommand("giverocket",				cmd_Rocketlauncher_q,       CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a rocket launcher");
+	cmdSystem->AddCommand("givenapalm",             cmd_Napalmgun_t,            CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a napalm gun");
+	cmdSystem->AddCommand("givelightning",          cmd_Lightninggun_l,         CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a lightning gun");
+	cmdSystem->AddCommand("givehaste", cmd_Haste_h, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player haste");
+	cmdSystem->AddCommand("givefullheal", cmd_Regen_p, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player regen");
+	cmdSystem->AddCommand("givefullarmor", cmd_ArmorGen_g, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player full armor");
+	
+	
+	
+	//DND Classes
+	cmdSystem->AddCommand("giveshotgun",			cmd_Shotgun_k, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a shotgun");
+	cmdSystem->AddCommand("giverailgun", cmd_Railgun_j, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a railgun");
 
 // RAVEN BEGIN
 // rjohnson: entity usage stats

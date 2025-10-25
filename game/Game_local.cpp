@@ -11,6 +11,9 @@
 #include "ai/AI_Manager.h"
 #include "ai/AAS_tactical.h"
 #include "Game_Log.h"
+#include "Game_local.h"
+#include "ai/AI.h"
+#include "Player.h"
 // RAVEN END
 
 //#define UI_DEBUG	1
@@ -236,6 +239,32 @@ idGameLocal::idGameLocal
 idGameLocal::idGameLocal() {
 	Clear();
 }
+
+void DisableInvincibility(idPlayer* player) {
+	if (player && player->godmode) {
+		player->godmode = false;
+		gameLocal.Printf("Invincibility expired!\n");
+	}
+}
+
+void ToggleInvincibility_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player) {
+		if (player->godmode) {
+			// If already invincible, disable it immediately
+			player->godmode = false;
+			gameLocal.Printf("Invincibility disabled!\n");
+		}
+		else {
+			// Enable invincibility
+			player->godmode = true;
+			gameLocal.Printf("Invincibility enabled for 15 seconds!\n");
+
+			player->PostEventSec(&EV_Player_DisableInvincibility, 10.0f);
+		}
+	}
+}
+
 
 /*
 ===========
@@ -509,6 +538,7 @@ void idGameLocal::Init( void ) {
 
 	cmdSystem->AddCommand( "listModelDefs", idListDecls_f<DECL_MODELDEF>, CMD_FL_SYSTEM|CMD_FL_GAME, "lists model defs" );
 	cmdSystem->AddCommand( "printModelDefs", idPrintDecls_f<DECL_MODELDEF>, CMD_FL_SYSTEM|CMD_FL_GAME, "prints a model def", idCmdSystem::ArgCompletion_Decl<DECL_MODELDEF> );
+	cmdSystem->AddCommand("toggleInvincibility", ToggleInvincibility_f, CMD_FL_GAME, "Toggles invincibility");
 
 	Clear();
 
@@ -522,6 +552,21 @@ void idGameLocal::Init( void ) {
 	InitConsoleCommands();
 	// load default scripts
 	program.Startup( SCRIPT_DEFAULT );
+
+	//DND classes
+	void cmd_Rocketlauncher_q(const idCmdArgs & args); {
+		idPlayer* player = gameLocal.GetLocalPlayer();
+		if (player) {
+			player->GiveItem("weapon_rocketlauncher");
+			gameLocal.Printf("Rocket Launcher Granted!\n");
+		}
+		else {
+			gameLocal.Printf("No player found!\n");
+		}
+	}
+
+	cmdSystem->AddCommand("giverocket", cmd_Rocketlauncher_q, CMD_FL_GAME | CMD_FL_CHEAT, "Gives the player a rocket launcher");
+
 	
 	// set up the aas
 // RAVEN BEGIN
