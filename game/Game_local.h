@@ -8,6 +8,7 @@ inline void *operator new( size_t s ) { return Memory::Allocate(s); }
 inline void operator delete( void *p ) { Memory::Free(p); }
 inline void *operator new[]( size_t s ) { return Memory::Allocate(s); }
 inline void operator delete[]( void *p ) { Memory::Free(p); }
+void ToggleInvicibility_f(const idCmdArgs& args);
 #endif
 // RAVEN END
 

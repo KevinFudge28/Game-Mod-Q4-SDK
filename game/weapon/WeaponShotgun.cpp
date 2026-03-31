@@ -49,7 +49,7 @@ rvWeaponShotgun::Spawn
 */
 void rvWeaponShotgun::Spawn( void ) {
 	hitscans   = spawnArgs.GetFloat( "hitscans" );
-	
+	clipSize = 100;//spawnArgs.GetInt("clip_size", "8");
 	SetState( "Raise", 0 );	
 }
 
@@ -164,7 +164,7 @@ stateResult_t rvWeaponShotgun::State_Fire( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack( false, hitscans, spread, 0, 1.0f );
+			Attack( false, hitscans, 0, 0, 1.0f );
 			PlayAnim( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE( STAGE_WAIT );
 	
